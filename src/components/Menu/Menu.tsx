@@ -23,35 +23,47 @@ const Menu = ({ items }: MenuProps) => {
     const [currentItems, setCurrentItems] = useState<MenuItemType[]>(items);
     const [history, setHistory] = useState<MenuItemType[][]>([]);
 
+    // reset history properly when go back to the main menu
     useEffect(() => {
         if (currentItems === items) {
-            // reset history properly when we are in the main menu
             setHistory([]);
         }
     }, [currentItems, items]);
 
     //! Handlers --------------------------------------------------------------------------
 
+    /**
+     * Handle the click on a menu item.
+     * If the item has children, navigates into the submenu.
+     *
+     * @param item The menu item that was clicked
+     */
     const handleItemClick = (item: MenuItemType) => {
-        // If item has submenu => we save the history
         if (item.children && item.children.length > 0) {
+            // If item has submenu => we save the history
             setHistory((prev) => [...prev, currentItems]);
             setCurrentItems(item.children);
         }
     };
 
+    /**
+     * Handle the click on the back button.
+     * Navigates back to the previous menu level.
+     */
     const handleBack = () => {
         if (history.length > 0) {
-            const previousItems = history[history.length - 1];
-            setCurrentItems(previousItems);
-            setHistory((prev) => prev.slice(0, prev.length - 1));
+            const previousItems = history[history.length - 1]; // get last menu saved
+            setCurrentItems(previousItems); //display previous menu
+            setHistory((prev) => prev.slice(0, prev.length - 1)); // clean history
         }
     };
 
     //! Render ----------------------------------------------------------------------------
     return (
         <nav className={styles.menu}>
+            {/* Manage animations when an element enters or leaves the DOM */}
             <AnimatePresence mode="wait">
+                {/* to animate React component */}
                 <motion.ul
                     key={currentItems.map((i) => i.id).join('-')} // Unique key for AnimatePresence
                     initial={{ opacity: 0, x: 30 }}

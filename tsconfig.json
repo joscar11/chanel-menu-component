@@ -24,7 +24,8 @@
             "@assets/*": ["assets/*"],
             "@context/*": ["context/*"],
             "@styles/*": ["styles/*"],
-            "@utils/*": ["utils/*"]
+            "@utils/*": ["utils/*"],
+            "@data/*": ["data/*"]
         },
         "jsx": "react-jsx" // no need to import React in each file since React 18
     },
