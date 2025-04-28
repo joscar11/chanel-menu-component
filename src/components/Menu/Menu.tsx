@@ -22,6 +22,8 @@ const Menu = ({ items }: MenuProps) => {
 
     const [currentItems, setCurrentItems] = useState<MenuItemType[]>(items);
     const [history, setHistory] = useState<MenuItemType[][]>([]);
+    // to handle animation direction
+    const [direction, setDirection] = useState<'forward' | 'back'>('forward');
 
     // reset history properly when go back to the main menu
     useEffect(() => {
@@ -43,6 +45,7 @@ const Menu = ({ items }: MenuProps) => {
             // If item has submenu => we save the history
             setHistory((prev) => [...prev, currentItems]);
             setCurrentItems(item.children);
+            setDirection('forward');
         }
     };
 
@@ -55,6 +58,7 @@ const Menu = ({ items }: MenuProps) => {
             const previousItems = history[history.length - 1]; // get last menu saved
             setCurrentItems(previousItems); //display previous menu
             setHistory((prev) => prev.slice(0, prev.length - 1)); // clean history
+            setDirection('back');
         }
     };
 
@@ -66,9 +70,9 @@ const Menu = ({ items }: MenuProps) => {
                 {/* to animate React component */}
                 <motion.ul
                     key={currentItems.map((i) => i.id).join('-')} // Unique key for AnimatePresence
-                    initial={{ opacity: 0, x: 30 }}
+                    initial={{ opacity: 0, x: direction === 'forward' ? -30 : 30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -30 }}
+                    exit={{ opacity: 0, x: direction === 'forward' ? 30 : -30 }}
                     transition={{ duration: 0.4, ease: 'easeInOut' }}
                     className={styles.menuList}>
                     <li className={styles.menuHeader}>
