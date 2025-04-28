@@ -1,0 +1,39 @@
+.menu {
+    padding: 2rem;
+    background-color: #f6f6f6;
+    min-height: 100vh;
+}
+
+.menuList {
+    list-style: none;
+    padding: 0;
+}
+
+.menuItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #cbe9f9;
+    }
+}
+
+.menuItemLabel {
+    font-size: 1.5rem;
+    text-transform: lowercase;
+}
+
+.menuItemArrow {
+    color: #afafaf;
+}
+
+.arrowButton {
+    margin-bottom: 1rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
