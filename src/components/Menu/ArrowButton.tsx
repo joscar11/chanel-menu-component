@@ -1,16 +1,7 @@
 //! Imports ------------------------------------------------------------------------------
 
 // Styles
-
-// Components
-
-// Types
-
-// Utilities
-
-// Context
-
-// Assets
+import styles from './Menu.module.scss';
 
 //! Component ---------------------------------------------------------------------------
 
@@ -20,7 +11,11 @@ interface ArrowButtonProps {
 
 const ArrowButton = ({ onClick }: ArrowButtonProps) => {
     //! Render ----------------------------------------------------------------------------
-    return <div className="ArrowButton"></div>;
+    return (
+        <button className={styles.arrowButton} onClick={onClick}>
+            ← Retour
+        </button>
+    );
 };
 
 //! Exports -----------------------------------------------------------------------------

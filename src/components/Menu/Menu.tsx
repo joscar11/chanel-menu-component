@@ -11,6 +11,7 @@ import { MenuItemType, MenuProps } from './types';
 
 // Components
 import MenuItem from './MenuItem';
+import ArrowButton from './ArrowButton';
 
 //! Component ---------------------------------------------------------------------------
 
@@ -30,9 +31,18 @@ const Menu = ({ items }: MenuProps) => {
         }
     };
 
+    const handleBack = () => {
+        if (history.length > 0) {
+            const previousItems = history[history.length - 1];
+            setCurrentItems(previousItems);
+            setHistory((prev) => prev.slice(0, prev.length - 1));
+        }
+    };
+
     //! Render ----------------------------------------------------------------------------
     return (
         <nav className={styles.menu}>
+            {history.length > 0 && <ArrowButton onClick={handleBack} />}{' '}
             <ul className={styles.menuList}>
                 {currentItems.map((item) => (
                     <MenuItem key={item.id} item={item} onClick={handleItemClick} />
