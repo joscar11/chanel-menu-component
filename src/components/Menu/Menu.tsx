@@ -23,6 +23,7 @@ const Menu = ({ items }: MenuProps) => {
 
     const [currentItems, setCurrentItems] = useState<MenuItemType[]>(items);
     const [history, setHistory] = useState<MenuItemType[][]>([]);
+    const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
     //! Handlers --------------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ const Menu = ({ items }: MenuProps) => {
         if (item.children && item.children.length > 0) {
             setHistory((prev) => [...prev, currentItems]);
             setCurrentItems(item.children);
+            setSelectedItemId(item.id);
         }
     };
 
@@ -61,7 +63,7 @@ const Menu = ({ items }: MenuProps) => {
                     {currentItems.map((item, index) => (
                         <motion.li
                             key={item.id}
-                            className={styles.menuItem}
+                            className={`${styles.menuItem} ${selectedItemId === item.id ? styles.active : ''}`}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.05 }} // Staggered effect

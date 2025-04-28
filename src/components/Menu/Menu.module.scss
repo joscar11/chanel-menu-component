@@ -2,38 +2,74 @@
     padding: 2rem;
     background-color: #f6f6f6;
     min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .menuList {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .menuItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 2rem; // more padding
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.5rem;
+    color: #000;
+    text-transform: lowercase;
     cursor: pointer;
+    transition:
+        background-color 0.3s,
+        color 0.3s;
+    position: relative; // important for arrow
 
     &:hover {
         background-color: #cbe9f9;
     }
+
+    &:active {
+        background-color: #b2e0f8;
+    }
+}
+
+.menuItemContent {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .menuItemLabel {
-    font-size: 1.5rem;
-    text-transform: lowercase;
+    flex: 1;
+    text-align: left;
 }
 
 .menuItemArrow {
+    position: absolute;
+    right: 2rem;
     color: #afafaf;
+    transition: color 0.3s;
+
+    .menuItem:hover & {
+        color: #000;
+    }
 }
 
 .arrowButton {
-    margin-bottom: 1rem;
     background: none;
     border: none;
     font-size: 1rem;
+    color: #afafaf;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
     cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+        color: #000;
+    }
 }
