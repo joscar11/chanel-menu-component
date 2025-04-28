@@ -13,6 +13,9 @@ import { MenuItemType, MenuProps } from './types';
 import MenuItem from './MenuItem';
 import ArrowButton from './ArrowButton';
 
+// Motion
+import { motion, AnimatePresence } from 'framer-motion';
+
 //! Component ---------------------------------------------------------------------------
 
 const Menu = ({ items }: MenuProps) => {
@@ -42,12 +45,32 @@ const Menu = ({ items }: MenuProps) => {
     //! Render ----------------------------------------------------------------------------
     return (
         <nav className={styles.menu}>
-            {history.length > 0 && <ArrowButton onClick={handleBack} />}{' '}
-            <ul className={styles.menuList}>
-                {currentItems.map((item) => (
-                    <MenuItem key={item.id} item={item} onClick={handleItemClick} />
-                ))}
-            </ul>
+            {history.length > 0 && (
+                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                    <ArrowButton onClick={handleBack} />
+                </motion.div>
+            )}
+            <AnimatePresence mode="wait">
+                <motion.ul
+                    key={currentItems.map((i) => i.id).join('-')} // Unique key for AnimatePresence
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.4, ease: 'easeInOut' }}
+                    className={styles.menuList}>
+                    {currentItems.map((item, index) => (
+                        <motion.li
+                            key={item.id}
+                            className={styles.menuItem}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05 }} // Staggered effect
+                            onClick={() => handleItemClick(item)}>
+                            <MenuItem key={item.id} item={item} onClick={handleItemClick} />
+                        </motion.li>
+                    ))}
+                </motion.ul>
+            </AnimatePresence>
         </nav>
     );
 };
