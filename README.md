@@ -20,7 +20,7 @@
 ## 📂 Project Structure
 
 ```
-my-app/
+chanel-menu-component/
 ├── public/
 │   └── index.html
 ├── src/
