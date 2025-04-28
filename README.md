@@ -24,12 +24,10 @@ my-app/
 ├── public/
 │   └── index.html
 ├── src/
-│   ├── assets/
 │   ├── components/
-│   ├── features/
+│   ├── data/
 │   ├── pages/
 │   ├── styles/
-│   ├── utils/
 │   ├── App.tsx
 │   └── main.tsx
 ├── .eslintrc.js
