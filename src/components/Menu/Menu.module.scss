@@ -73,3 +73,34 @@
         color: #000;
     }
 }
+
+.menuHeader {
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    height: 64px; // même hauteur que les items
+}
+
+.arrowBackButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #afafaf;
+    transition:
+        color 0.3s,
+        transform 0.3s;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        color: #000;
+    }
+}
+
+.menuTitle {
+    font-size: 1.5rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-transform: lowercase;
+    color: #000;
+}

@@ -1,7 +1,7 @@
 //! Imports ------------------------------------------------------------------------------
 
 // React
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Styles
 import styles from './Menu.module.scss';
@@ -11,7 +11,6 @@ import { MenuItemType, MenuProps } from './types';
 
 // Components
 import MenuItem from './MenuItem';
-import ArrowButton from './ArrowButton';
 
 // Motion
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,7 +22,13 @@ const Menu = ({ items }: MenuProps) => {
 
     const [currentItems, setCurrentItems] = useState<MenuItemType[]>(items);
     const [history, setHistory] = useState<MenuItemType[][]>([]);
-    const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+
+    useEffect(() => {
+        if (currentItems === items) {
+            // reset history properly when we are in the main menu
+            setHistory([]);
+        }
+    }, [currentItems, items]);
 
     //! Handlers --------------------------------------------------------------------------
 
@@ -32,7 +37,6 @@ const Menu = ({ items }: MenuProps) => {
         if (item.children && item.children.length > 0) {
             setHistory((prev) => [...prev, currentItems]);
             setCurrentItems(item.children);
-            setSelectedItemId(item.id);
         }
     };
 
@@ -47,11 +51,6 @@ const Menu = ({ items }: MenuProps) => {
     //! Render ----------------------------------------------------------------------------
     return (
         <nav className={styles.menu}>
-            {history.length > 0 && (
-                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-                    <ArrowButton onClick={handleBack} />
-                </motion.div>
-            )}
             <AnimatePresence mode="wait">
                 <motion.ul
                     key={currentItems.map((i) => i.id).join('-')} // Unique key for AnimatePresence
@@ -60,10 +59,19 @@ const Menu = ({ items }: MenuProps) => {
                     exit={{ opacity: 0, x: -30 }}
                     transition={{ duration: 0.4, ease: 'easeInOut' }}
                     className={styles.menuList}>
+                    <li className={styles.menuHeader}>
+                        {history.length > 0 ? (
+                            <button className={styles.arrowBackButton} onClick={handleBack}>
+                                ←
+                            </button>
+                        ) : (
+                            <span className={styles.menuTitle}>menu</span>
+                        )}
+                    </li>
                     {currentItems.map((item, index) => (
                         <motion.li
                             key={item.id}
-                            className={`${styles.menuItem} ${selectedItemId === item.id ? styles.active : ''}`}
+                            className={styles.menuItem}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.05 }} // Staggered effect
