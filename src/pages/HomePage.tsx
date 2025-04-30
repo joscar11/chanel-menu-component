@@ -4,7 +4,7 @@
 import React from 'react';
 
 // Components
-import Menu from '@components/Menu/Menu';
+import ChanelMenu from '@components/ChanelMenu/ChanelMenu';
 
 // Data
 import { menuItems } from '@data/menuData';
@@ -20,7 +20,7 @@ const HomePage = () => {
     return (
         <div className={styles.page}>
             <div className={styles.menuWrapper}>
-                <Menu items={menuItems} />
+                <ChanelMenu items={menuItems} />
             </div>
         </div>
     );

@@ -8,11 +8,7 @@ import HomePage from '@pages/HomePage';
 const App = () => {
     //! Render ----------------------------------------------------------------------------
 
-    return (
-        <div className="app">
-            <HomePage />
-        </div>
-    );
+    return <HomePage />;
 };
 
 //! Exports -----------------------------------------------------------------------------
