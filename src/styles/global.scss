@@ -1,11 +1,5 @@
 @use './variables' as *;
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box; // remove scrollbar
-}
-
 html,
 body {
     margin: 0;

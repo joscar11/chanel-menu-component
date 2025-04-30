@@ -1,34 +1,49 @@
-.menu {
-    padding: 2rem;
-    background-color: #f6f6f6;
-    min-height: 100vh;
-    height: 100vh;
-    overflow: hidden;
-}
+@use '../../styles/variables' as *;
 
-.menuList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.menuContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+
+    &.left {
+        transform: translateX(-100%);
+    }
+
+    &.active {
+        transform: translateX(0%);
+    }
+
+    &.right {
+        transform: translateX(100%);
+    }
 }
 
 .menuItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem; // more padding
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 1.5rem;
+    padding: 22px;
     color: #000;
-    text-transform: lowercase;
+    font-size: 20px;
     cursor: pointer;
-    transition:
-        background-color 0.3s,
-        color 0.3s;
-    position: relative; // important for arrow
+    transition: background-color 0.3s ease;
+
+    .menuArrow {
+        color: #afafaf;
+        transition: color 0.3s ease;
+    }
 
     &:hover {
         background-color: #cbe9f9;
+
+        .menuArrow {
+            color: #000;
+        }
     }
 
     &:active {
@@ -36,71 +51,20 @@
     }
 }
 
-.menuItemContent {
-    position: relative;
+.menuBackItem {
     display: flex;
     align-items: center;
-    width: 100%;
-}
-
-.menuItemLabel {
-    flex: 1;
-    text-align: left;
-}
-
-.menuItemArrow {
-    position: absolute;
-    right: 2rem;
+    padding: 22px;
     color: #afafaf;
-    transition: color 0.3s;
+    font-size: 20px;
+    background-color: #f6f6f6;
 
-    .menuItem:hover & {
-        color: #000;
+    .menuArrow {
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #000;
+        }
     }
-}
-
-.arrowButton {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    color: #afafaf;
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    transition: color 0.3s;
-
-    &:hover {
-        color: #000;
-    }
-}
-
-.menuHeader {
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    height: 64px; // même hauteur que les items
-}
-
-.arrowBackButton {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #afafaf;
-    transition:
-        color 0.3s,
-        transform 0.3s;
-    display: flex;
-    align-items: center;
-
-    &:hover {
-        color: #000;
-    }
-}
-
-.menuTitle {
-    font-size: 1.5rem;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    text-transform: lowercase;
-    color: #000;
 }
