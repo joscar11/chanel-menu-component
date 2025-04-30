@@ -45,8 +45,8 @@ chanel-menu-component/
 1. Clone the repository :
 
 ```bash
-git clone https://github.com/joscar11/react-ts-starter.git
-cd react-ts-starter
+git clone https://github.com/joscar11/chanel-menu-component.git
+cd chanel-menu-component
 ```
 
 2. Install dependencies :
