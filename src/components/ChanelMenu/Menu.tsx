@@ -1,10 +1,7 @@
 //! Imports ------------------------------------------------------------------------------
 
-// React
-import React from 'react';
-
 // Types
-import { MenuItemType } from './types';
+import { MenuItemType } from './menuTypes';
 
 // Styles
 import styles from './Menu.module.scss';
@@ -28,8 +25,8 @@ const Menu = ({ items, onItemClick, onBack, showBack = false, position }: MenuPr
     return (
         <div className={`${styles.menuContainer} ${styles[position]}`}>
             {showBack && (
-                <div className={styles.menuBackItem} onClick={onBack}>
-                    <MdArrowBack className={styles.menuArrow} />
+                <div className={styles.menuBackItem}>
+                    <MdArrowBack className={styles.menuArrow} onClick={onBack} />
                 </div>
             )}
 

@@ -31,9 +31,30 @@ export const menuItems = [
         id: 3,
         label: 'album',
         children: [
-            { id: 20, label: 'get your wings' },
-            { id: 21, label: 'hotel california' },
-            { id: 22, label: 'physical graffiti' }
+            {
+                id: 20,
+                label: 'get your wings',
+                children: [
+                    { id: 70, label: 'houses of the holy' },
+                    { id: 71, label: 'in my time of dying' }
+                ]
+            },
+            {
+                id: 21,
+                label: 'hotel california',
+                children: [
+                    { id: 72, label: 'sun' },
+                    { id: 73, label: 'light' }
+                ]
+            },
+            {
+                id: 22,
+                label: 'physical graffiti',
+                children: [
+                    { id: 74, label: 'houses of the holy' },
+                    { id: 75, label: 'in my time of dying' }
+                ]
+            }
         ]
     },
     {

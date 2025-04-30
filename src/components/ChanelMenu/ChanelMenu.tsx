@@ -1,13 +1,13 @@
 //! Imports ------------------------------------------------------------------------------
 
 // React
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 
 // Components
 import Menu from './Menu';
 
 // Types
-import { MenuItemType } from './types';
+import { MenuItemType } from './menuTypes';
 
 // Styles
 import styles from './ChanelMenu.module.scss';
@@ -25,8 +25,19 @@ const ChanelMenu = ({ items }: ChanelMenuProps) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
     const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const [containerHeight, setContainerHeight] = useState<number>(408);
 
-    //! Logic ------------------------------------------------------------------------------
+    // To adjust the height with each menu change
+    useEffect(() => {
+        const menuContainers = document.querySelectorAll(`.${styles.menuContainer}`);
+        const activeMenu = menuContainers[activeIndex] as HTMLElement | null;
+
+        if (activeMenu) {
+            setContainerHeight(activeMenu.scrollHeight);
+        }
+    }, [activeIndex, menuHistory]);
+
+    //! Handlers ------------------------------------------------------------------------------
 
     /**
      * Handle the click on a menu item.
@@ -38,8 +49,10 @@ const ChanelMenu = ({ items }: ChanelMenuProps) => {
         (item: MenuItemType) => {
             if (item.children && !isAnimating) {
                 setIsAnimating(true);
-                setMenuHistory((prev) => [...prev.slice(0, -1)] as MenuItemType[][]);
+                setMenuHistory((prev) => [...prev, item.children!]); // "!" tells TypeScript : "I know children is defined here"
 
+                //setTimemout to desynchronize the two setState (menuHistory and activeIndex) to allow React to place
+                // the new menu in the DOM before triggering the transition
                 animationTimeoutRef.current = setTimeout(() => {
                     setActiveIndex((prev) => prev + 1);
                     setIsAnimating(false);
@@ -76,6 +89,7 @@ const ChanelMenu = ({ items }: ChanelMenuProps) => {
 
     //! Render ----------------------------------------------------------------------------
 
+    // To avoid re-rendering all menus on every tick
     const renderedMenus = useMemo(() => {
         return menuHistory.map((menu, index) => (
             <Menu
@@ -89,7 +103,11 @@ const ChanelMenu = ({ items }: ChanelMenuProps) => {
         ));
     }, [menuHistory, activeIndex, handleItemClick, handleBack]);
 
-    return <div className={styles.menuWrapper}>{renderedMenus}</div>;
+    return (
+        <div className={styles.menuWrapper} style={{ height: `${containerHeight}px` }}>
+            {renderedMenus}
+        </div>
+    );
 };
 
 //! Exports -----------------------------------------------------------------------------
