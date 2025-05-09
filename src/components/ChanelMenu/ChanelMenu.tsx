@@ -7,16 +7,12 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Menu from './Menu';
 
 // Types
-import { MenuItemType } from './menuTypes';
+import { MenuItemType, ChanelMenuProps } from './menuTypes';
 
 // Styles
 import styles from './ChanelMenu.module.scss';
 
 //! Component ---------------------------------------------------------------------------
-
-interface ChanelMenuProps {
-    items: MenuItemType[];
-}
 
 const ChanelMenu = ({ items }: ChanelMenuProps) => {
     //! Hooks ------------------------------------------------------------------------------
@@ -27,7 +23,7 @@ const ChanelMenu = ({ items }: ChanelMenuProps) => {
     const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [containerHeight, setContainerHeight] = useState<number>(408);
 
-    // To adjust the height with each menu change
+    // To adjust the height of the active menu at each menu change
     useEffect(() => {
         const menuContainers = document.querySelectorAll(`.${styles.menuContainer}`);
         const activeMenu = menuContainers[activeIndex] as HTMLElement | null;
@@ -36,6 +32,15 @@ const ChanelMenu = ({ items }: ChanelMenuProps) => {
             setContainerHeight(activeMenu.scrollHeight);
         }
     }, [activeIndex, menuHistory]);
+
+    // Cleanup timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (animationTimeoutRef.current) {
+                clearTimeout(animationTimeoutRef.current);
+            }
+        };
+    }, []);
 
     //! Handlers ------------------------------------------------------------------------------
 
@@ -49,7 +54,8 @@ const ChanelMenu = ({ items }: ChanelMenuProps) => {
         (item: MenuItemType) => {
             if (item.children && !isAnimating) {
                 setIsAnimating(true);
-                setMenuHistory((prev) => [...prev, item.children!]); // "!" tells TypeScript : "I know children is defined here"
+                // "!" tells TypeScript : "I guarantee that a non-null children is defined here"
+                setMenuHistory((prev) => [...prev, item.children!]);
 
                 //setTimemout to desynchronize the two setState (menuHistory and activeIndex) to allow React to place
                 // the new menu in the DOM before triggering the transition
@@ -77,15 +83,6 @@ const ChanelMenu = ({ items }: ChanelMenuProps) => {
             }, 300); // Match animation duration
         }
     }, [isAnimating, menuHistory]);
-
-    // Cleanup timeout on unmount
-    useEffect(() => {
-        return () => {
-            if (animationTimeoutRef.current) {
-                clearTimeout(animationTimeoutRef.current);
-            }
-        };
-    }, []);
 
     //! Render ----------------------------------------------------------------------------
 

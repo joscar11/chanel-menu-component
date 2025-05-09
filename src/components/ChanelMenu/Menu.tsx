@@ -1,7 +1,7 @@
 //! Imports ------------------------------------------------------------------------------
 
 // Types
-import { MenuItemType } from './menuTypes';
+import { MenuProps } from './menuTypes';
 
 // Styles
 import styles from './Menu.module.scss';
@@ -11,19 +11,11 @@ import { MdArrowForward, MdArrowBack } from 'react-icons/md';
 
 //! Component ---------------------------------------------------------------------------
 
-interface MenuProps {
-    items: MenuItemType[];
-    onItemClick: (item: MenuItemType) => void;
-    onBack?: () => void;
-    showBack?: boolean;
-    position: 'left' | 'active' | 'right';
-}
-
 const Menu = ({ items, onItemClick, onBack, showBack = false, position }: MenuProps) => {
     //! Render ----------------------------------------------------------------------------
 
     return (
-        <div className={`${styles.menuContainer} ${styles[position]}`}>
+        <div className={`menu-container ${styles.menuContainer} ${styles[position]}`}>
             {showBack && (
                 <div className={styles.menuBackItem}>
                     <MdArrowBack className={styles.menuArrow} onClick={onBack} />

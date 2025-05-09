@@ -19,9 +19,7 @@ const HomePage = () => {
 
     return (
         <div className={styles.page}>
-            <div className={styles.menuWrapper}>
-                <ChanelMenu items={menuItems} />
-            </div>
+            <ChanelMenu items={menuItems} />
         </div>
     );
 };

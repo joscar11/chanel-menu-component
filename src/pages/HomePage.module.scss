@@ -3,14 +3,6 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-.menuWrapper {
-    width: 500px;
-    height: 408px;
-    background-color: #f6f6f6;
-    overflow: hidden;
-    transition: height 0.3s ease;
-    position: relative;
+    align-items: flex-start; // to fix menu on the top
+    padding-top: 100px; // let space
 }
